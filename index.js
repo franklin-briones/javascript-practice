@@ -1,28 +1,40 @@
-// 1. Grab the save-el paragrah and store it in a variable called saveEl
-let saveEl = document.getElementById("save-el")
+let firstCard = 2
+let secondCard = 11
+let cards = [firstCard, secondCard]
+let sum = firstCard+secondCard
+let hasBlackJack = false
+let isAlive = true
+let message = ""
 
-// Inititalize passenger count as 0
-let count = 0
+let messageEl = document.getElementById("message-el")
+let cardEl = document.querySelector("#cards-el")
+let sumEl = document.querySelector("#sum-el")
 
-// Define count element in JS
-let countEl = document.getElementById('count-el')
+const startGame = () => {renderGame()}
 
-// Listen for clicks on the increment button
-function increment() {
-    count += 1
-    console.log(count)
-    countEl.textContent=count
+function renderGame() {
+
+    sumEl.textContent = "Sum: " + sum
+
+    cardEl.textContent = "Cards: " + cards[0] + ", " + cards[1]
+
+    if (sum<=20) {
+        message = "Do you want to draw a new card?"
+    }
+    else if (sum===21) {
+        message = "Black Jack!"
+        hasBlackJack=true
+    }
+    else {
+        message = "You lose!"
+        isAlive=false
+    }
+
+    messageEl.textContent=message   
 }
 
-
-// Create button to save passenger count
-
-function save() {
-    // 2. Create a variable that contains both the count and the dash separator, i.e. "12 - "
-    let countHist = count + " - "
-    // 3. Render the variable in the saveEl using innerText
-    saveEl.textContent += countHist
-    // NB: Make sure to not delete the existing content of the paragraph
-    count = 0
-    countEl.textContent=count
+function newCard() {
+    let newCard = Math.ceil(Math.random()*11)
+    sum += newCard
+    renderGame()
 }
